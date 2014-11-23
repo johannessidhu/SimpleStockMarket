@@ -7,12 +7,9 @@ import message.Message;
 import gateway.GenericGateway;
 
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
-import concurrency.Consumer;
-import concurrency.Producer;
 import concurrency.ConsumerProducerFactory;
 
 import org.apache.commons.configuration.ConfigurationException;
@@ -78,9 +75,7 @@ public class ResourceScheduler {
 		
 		int numberOFProducers = appConfig.getInt("ResourceScheduler.numberOFProducers");
 		int numberOFConsumers = appConfig.getInt("ResourceScheduler.numberOFConsumers");
-				
-		LOGGER.info(appConfig.getString("test"));
-				
+								
 		BlockingQueue<Message> queue = new LinkedBlockingQueue<Message>();
 		MessageStorage messageStorage = new MessageStorage();
 
