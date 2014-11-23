@@ -11,7 +11,7 @@ import org.apache.commons.configuration.XMLConfiguration;
 import dataSructures.MessageStorage;
 import message.Message;
 
-public class ResourceSchedulerFactory {
+public class ConsumerProducerFactory {
 
 	private int numberOFProducers;
 	private int numberOFConsumers;
@@ -21,7 +21,7 @@ public class ResourceSchedulerFactory {
 	 * @param numberOFProducers
 	 * @param numberOFConsumers
 	 */
-	public ResourceSchedulerFactory(int numberOFProducers, int numberOFConsumers) {
+	public ConsumerProducerFactory(int numberOFProducers, int numberOFConsumers) {
 		this.numberOFProducers = numberOFProducers;
 		this.numberOFConsumers = numberOFConsumers;
 	}
@@ -31,7 +31,7 @@ public class ResourceSchedulerFactory {
 	 * @param numberOFProducers
 	 * @return
 	 */
-	public ExecutorService providesProducerExecutor(int numberOFProducers) {
+	public ExecutorService providesProducerExecutor() {
 		return Executors.newFixedThreadPool(numberOFProducers);
 	}
 
@@ -51,7 +51,7 @@ public class ResourceSchedulerFactory {
 	 * @param numberOFConsumers
 	 * @return
 	 */
-	public ExecutorService providesConsumerExecutor(int numberOFConsumers) {
+	public ExecutorService providesConsumerExecutor() {
 		return Executors.newFixedThreadPool(numberOFConsumers);
 	}
 

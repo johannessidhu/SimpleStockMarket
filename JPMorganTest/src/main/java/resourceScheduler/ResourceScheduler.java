@@ -13,6 +13,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 
 import concurrency.Consumer;
 import concurrency.Producer;
+import concurrency.ConsumerProducerFactory;
 
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.XMLConfiguration;
@@ -83,12 +84,14 @@ public class ResourceScheduler {
 		BlockingQueue<Message> queue = new LinkedBlockingQueue<Message>();
 		MessageStorage messageStorage = new MessageStorage();
 
+		ConsumerProducerFactory consumerProducerFactory = new ConsumerProducerFactory(numberOFProducers, numberOFConsumers); 
+		
 		// Initiate Producers and start the threads
-        ExecutorService producerExecutor = Executors.newFixedThreadPool(numberOFProducers);
+        ExecutorService producerExecutor = consumerProducerFactory.providesProducerExecutor();
 
         for (int i = 0; i < numberOFProducers; i++) {
 
-            Runnable producer = new Producer(queue, messageStorage, appConfig);
+            Runnable producer = consumerProducerFactory.providesProducer(queue, messageStorage, appConfig);
             producerExecutor.execute(producer);
 
           }
@@ -96,11 +99,11 @@ public class ResourceScheduler {
         producerExecutor.shutdown();
 
 		// Initiate Consumers and start the threads
-        ExecutorService consumerExecutor = Executors.newFixedThreadPool(numberOFConsumers);
+        ExecutorService consumerExecutor = consumerProducerFactory.providesConsumerExecutor();
 
         for (int i = 0; i < numberOFConsumers; i++) {
 
-            Runnable consumer = new Consumer(queue, messageStorage, GENERIC_GATEWAY);
+            Runnable consumer = consumerProducerFactory.providesConsumer(queue, messageStorage, GENERIC_GATEWAY);
             consumerExecutor.execute(consumer);
 
           }
