@@ -96,10 +96,17 @@ public class Producer implements Runnable{
 			for(int x = 1; x <= numberOFMessages; x++) {
 
 				// the randomly generated Message object
-				StringMessage newMessage = (StringMessage) StringMessage.generateRandomMessage(upperBoundForGroupID);
-				newMessage.setStringMessage("msg" + x);
-				// add the new Message to the queue
+				Message newMessage =  StringMessage.generateRandomMessage(upperBoundForGroupID);
 
+				/*
+				 * 
+				 * The two commented lines below can be used in conjunction to allow for better overview when observing the behaviour of the ResourceScheduler.
+				 * It sets the StringMessage's stringMessage field to the current x i.e. the xth generated message.
+				 *
+				 * 	Message newMessage = StringMessage.generateRandomMessage(upperBoundForGroupID);
+				 *	newMessage.setStringMessage("msg" + x);
+				 * */
+				
 				// Extra credit for Termination Message for a particular groupID - this if statement turns a newMessage into a termination message
 				if(x % intervalOfTerminationMessages == 0) {
 					newMessage = (StringMessage) StringMessage.createTerminationMessage(newMessage.getGroupID());

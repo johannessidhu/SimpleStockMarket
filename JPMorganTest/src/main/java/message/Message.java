@@ -14,6 +14,12 @@ public interface Message extends Cloneable {
 	 * */
 	public void completed();
 
+	/**
+	 * Method that return the groupID, this allows for other parts of the ResourceScheduler to determine the groupID of a Message
+	 * @return
+	 */
+	public long getGroupID();
+
 	
 	/**
 	 * The clone() method for object duplication. 
