@@ -27,8 +27,6 @@ import dataSructures.MessageStorage;
 public class ResourceScheduler {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(ResourceScheduler.class);	
-	private static final int DEFAULT_NUMBER_OF_PRODUCERS = 1;	
-	private static final int DEFAULT_NUMBER_OF_CONSUMERS = 1;	
 
 	protected static final GenericGateway GENERIC_GATEWAY = new GenericGateway();
 
@@ -76,8 +74,8 @@ public class ResourceScheduler {
 	 */
 	private void start(XMLConfiguration appConfig) throws Exception{
 
-		int numberOFProducers = DEFAULT_NUMBER_OF_PRODUCERS;
-		int numberOFConsumers = DEFAULT_NUMBER_OF_CONSUMERS;
+		int numberOFProducers = 0;
+		int numberOFConsumers = 0;
 
 		/*
 		 * This block checks for the input from the loaded configuration file
@@ -92,11 +90,9 @@ public class ResourceScheduler {
 		
 		// for the Resource Scheduler to execute it must have at least one producer and one consumer
 		if(numberOFConsumers <= 0 || numberOFProducers <= 0) {
-			LOGGER.error("Please specify at least 1 Consumer and Producer in the configuration file. Default setup of 1 producer and 2 Consumers initated");
-
-			numberOFProducers = DEFAULT_NUMBER_OF_PRODUCERS;
-			numberOFConsumers = DEFAULT_NUMBER_OF_CONSUMERS;
-
+			LOGGER.error("Please specify at least 1 Consumer and 1 Producer in the configuration file. "
+					+ "Exiting Resource Scheduler with System.exit(0).");
+			System.exit(0);
 		}
 
 		BlockingQueue<Message> queue = new LinkedBlockingQueue<Message>();
