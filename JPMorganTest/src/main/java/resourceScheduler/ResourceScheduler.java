@@ -39,7 +39,7 @@ public class ResourceScheduler {
 
 		final ResourceScheduler application = new ResourceScheduler();
 
-		LOGGER.info("Starting SchedulerTests");
+		LOGGER.info("Starting schedulerTests");
 
 		XMLConfiguration appConfig = null;
 

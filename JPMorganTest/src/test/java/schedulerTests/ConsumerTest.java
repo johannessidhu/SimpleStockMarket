@@ -1,4 +1,4 @@
-package SchedulerTests;
+package schedulerTests;
 
 import static org.junit.Assert.assertEquals;
 import gateway.GenericGateway;

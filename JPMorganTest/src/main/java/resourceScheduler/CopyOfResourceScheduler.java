@@ -40,7 +40,7 @@ public class CopyOfResourceScheduler {
 
 		final CopyOfResourceScheduler application = new CopyOfResourceScheduler();
 
-		LOGGER.info("Starting SchedulerTests");
+		LOGGER.info("Starting schedulerTests");
 		
 		XMLConfiguration appConfig = null;
 

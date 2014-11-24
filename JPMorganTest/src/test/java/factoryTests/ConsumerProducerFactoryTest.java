@@ -1,4 +1,4 @@
-package FactoryTests;
+package factoryTests;
 
 import static org.junit.Assert.assertEquals;
 
