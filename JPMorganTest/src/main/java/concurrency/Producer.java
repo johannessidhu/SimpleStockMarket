@@ -6,6 +6,7 @@ import org.apache.commons.configuration.XMLConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import utilities.Utility;
 import dataSructures.MessageStorage;
 import message.Message;
 import message.StringMessage;
@@ -52,10 +53,34 @@ public class Producer implements Runnable{
 	public void run() {
 		try {
 
-			int numberOFMessages = appConfig.getInt("Producer.numberOFMessagesToBeProduced");
-			int intervalOfTerminationMessages = appConfig.getInt("Producer.intervalOfTerminationMessages");
-			int intervalOfCancellationMessages = appConfig.getInt("Producer.intervalOfCancellationMessages");
-			int intervalOfMessages = appConfig.getInt("Producer.intervalOfMessages");
+			int numberOFMessages = 0;
+			int intervalOfTerminationMessages = 0;
+			int intervalOfCancellationMessages = 0;
+			int intervalOfMessages = 0;
+
+			
+			/*
+			 * This block checks for the input from the loaded configuration file
+			 */
+			if(Utility.validConfigurationFileNumberEntry(appConfig.getString("Producer.numberOFMessagesToBeProduced")) && 
+					Utility.validConfigurationFileNumberEntry(appConfig.getString("Producer.intervalOfMessages"))) {
+		
+				numberOFMessages = Integer.parseInt(appConfig.getString("Producer.numberOFMessagesToBeProduced"));
+				intervalOfMessages = Integer.parseInt(appConfig.getString("Producer.intervalOfMessages"));
+
+			}
+
+			/*
+			 * This block also checks for the input from the loaded configuration file
+			 * I split it into 2 blocks for better readability, grouped by aspect
+			 */
+			if(Utility.validConfigurationFileNumberEntry(appConfig.getString("Producer.intervalOfTerminationMessages")) && 
+					Utility.validConfigurationFileNumberEntry(appConfig.getString("Producer.intervalOfCancellationMessages"))) {
+		
+				intervalOfTerminationMessages = Integer.parseInt(appConfig.getString("Producer.intervalOfTerminationMessages"));
+				intervalOfCancellationMessages = Integer.parseInt(appConfig.getString("Producer.intervalOfCancellationMessages"));
+
+			}
 			
 			Random rnd = new Random();
 			// I decided to run the producer for x iterations to allow for testing and for demoing the application
