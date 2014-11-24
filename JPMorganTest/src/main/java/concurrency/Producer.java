@@ -57,7 +57,7 @@ public class Producer implements Runnable{
 			int intervalOfTerminationMessages = 0;
 			int intervalOfCancellationMessages = 0;
 			int intervalOfMessages = 0;
-			long upperBoundForGroupID = 0L;
+			long upperBoundForGroupID = 0;
 			
 			/*
 			 * This block checks for the input from the loaded configuration file
@@ -83,7 +83,7 @@ public class Producer implements Runnable{
 
 			/*
 			 * This block checks for the input from the loaded configuration file specifically for Long value
- 			 * I split it into 2 blocks for better readability, grouped by aspect
+ 			 * I split it into 3 blocks for better readability, grouped by aspect
 			 */
 			if(Utility.validConfigurationFileLongEntry(appConfig.getString("Producer.upperBoundForGroupID"))) {
 		
