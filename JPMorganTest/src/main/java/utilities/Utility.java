@@ -30,7 +30,7 @@ public class Utility {
 	}
 
 	/**
-	 * Utility method to check if a string is a valid number for configuring the ResourceScheduler
+	 * Utility method to check if a string is a valid integer for configuring the ResourceScheduler
 	 * @param inputNumberString
 	 * @return true if the input string is a valid number (for configuring the ResourceScheduler)
 	 */
@@ -55,6 +55,31 @@ public class Utility {
 		return true;
 	}
 
+	/**
+	 * Utility method to check if a string is a valid integer for configuring the ResourceScheduler
+	 * @param inputNumberString
+	 * @return true if the input string is a valid number (for configuring the ResourceScheduler)
+	 */
+	public static boolean validConfigurationFileLongEntry(String inputNumberString){
+
+		if(!stringChecker(inputNumberString)) {
+			LOGGER.error("The input string is either empty or null or only consist of empty space.");
+			return false;
+		}
+		else {
+			try {
+
+				if(Long.parseLong(inputNumberString) < 0) {
+					LOGGER.error("For this application the assumption is all configuration numbers must be greater or equal to 0.");
+					return false;			}
+
+			} catch (NumberFormatException e) {
+				LOGGER.error("Input number in the loaded configuration file is NaN.");
+				return false;
+			}
+		}
+		return true;
+	}
 
 	
 	
