@@ -1,0 +1,32 @@
+To start the application, please run resourceScheduler.ResourceScheduler.
+
+This is the entry point to the application, it can take as argument an Apache configuration file, 
+otherwise it loads the default xml configuration file in the directory resources/META-INF
+
+Some configurations can be set using the xml file resources/META-INF/configuration or configuration file can be passed as
+argument if running from command line, just copy the configuration.xml file and modify the values to your liking to run
+different simulations by passing in the modified xml file(s) as arguments to the jar/program.
+
+I have added as many comments as I thought were relevant to explain some of the assumptions I made 
+(sorry I did not get the time to contact you guys to clarify as I was planning to).
+and some of design decisions I took. 
+
+I am using the producer, consumer and controller design pattern to run the application. 
+i am also using the factory design pattern to create and generate Message objects. I also uses a Abstract Factory,
+this allows for extension for different types of Messages in the future releases.  
+
+The Producers and Consumers are also created and generated using a Factory, but I do not use an Abstract Factory, Not sure
+if there will be different producers and consumers in the "near" future releases.
+
+For prioritising the messages I am using a FIFO queue as well as a MessageStorage, a Messages is added to both data structures by the Producer.
+
+2. It is then retrieved from the Fifo queue by the consumer checked if it is a Message and if hat is true check for a POISON message.
+2.1 POISON message indicated to the producer to stop processing messages after processing the last message.
+
+3. If it is not POISON then retrieve all the messages currently in the message storage for the particular groupID and process them one after another in FIFO manner.
+
+4. The message at the front of the queue is checked is it is either a CANCELLATION or TERMINATION messages and process it accordingly.
+4.1 If it is a generic message than call the completed() method of the Message interface and once completed send it to the Gateway using send().
+
+This is done till the POISON message is retrieved.
+
