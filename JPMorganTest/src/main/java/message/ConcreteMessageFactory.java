@@ -71,10 +71,14 @@ public class ConcreteMessageFactory implements MessageFactory {
 	 * This method returns a termination message for a particular groupID
 	 * @param groupID, of the group for which the Termination message should be created
 	 * @return termination Message
-	 * 
+	 * @throws IllegalArgumentException
 	 * */
 	@Override
-	public Message createTerminationMessage(long groupID) {
+	public Message createTerminationMessage(long groupID) throws IllegalArgumentException{
+
+		if(groupID < 0) {
+			throw new IllegalArgumentException ();
+		}
 
 		StringMessage terminationMessage = new StringMessage(groupID, TERMINATION_MESSAGE);
 
@@ -85,11 +89,15 @@ public class ConcreteMessageFactory implements MessageFactory {
 	 * This method returns a cancellation message for a particular groupID
 	 * @param groupID, of the group for which the Cancellation message should be created
 	 * @return cancellation Message
-	 * 
+	 * @throws IllegalArgumentException
 	 * */
 	@Override
-	public Message createCancellationMessage(long groupID) {
+	public Message createCancellationMessage(long groupID) throws IllegalArgumentException{
 
+		if(groupID < 0) {
+			throw new IllegalArgumentException ();
+		}
+		
 		StringMessage cancellationMessage = new StringMessage(groupID, CANCELLATION_MESSAGE);
 
 		return cancellationMessage;

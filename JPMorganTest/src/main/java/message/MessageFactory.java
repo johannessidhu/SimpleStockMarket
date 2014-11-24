@@ -3,7 +3,7 @@ package message;
 public interface MessageFactory {
 	
 	/**
-	 * Method to create random Messages - used for testing purposes and demo the program
+	 * Method to generate random Messages - used for testing purposes and demo the program
 	 * @param the exclusive upperLimit of the groupID, strictly generates groupIds < groupIdUpperLimit.
 	 * @return Message, new object of type Message is returned
 	 * @throws IllegalArgumentException
@@ -12,7 +12,7 @@ public interface MessageFactory {
 	public Message generateRandomMessage(long groupIdUpperLimit) throws IllegalArgumentException;
 
 	/**
-	 * Method to create random Messages - used for testing purposes and demo the program,
+	 * Method to generate random Messages - used for testing purposes and demo the program,
 	 * it uses Long.MAX_VALUE as the upper limit
 	 * @return Message, new object of type Message is returned
 	 * @throws IllegalArgumentException
