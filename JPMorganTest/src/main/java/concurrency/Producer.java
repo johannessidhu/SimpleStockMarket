@@ -62,8 +62,8 @@ public class Producer implements Runnable{
 			/*
 			 * This block checks for the input from the loaded configuration file
 			 */
-			if(Utility.validConfigurationFileNumberEntry(appConfig.getString("Producer.numberOFMessagesToBeProduced")) && 
-					Utility.validConfigurationFileNumberEntry(appConfig.getString("Producer.intervalOfMessages"))) {
+			if(Utility.validConfigurationFileIntegerEntry(appConfig.getString("Producer.numberOFMessagesToBeProduced")) && 
+					Utility.validConfigurationFileIntegerEntry(appConfig.getString("Producer.intervalOfMessages"))) {
 		
 				numberOFMessages = Integer.parseInt(appConfig.getString("Producer.numberOFMessagesToBeProduced"));
 				intervalOfMessages = Integer.parseInt(appConfig.getString("Producer.intervalOfMessages"));
@@ -74,8 +74,8 @@ public class Producer implements Runnable{
 			 * This block also checks for the input from the loaded configuration file
 			 * I split it into 2 blocks for better readability, grouped by aspect
 			 */
-			if(Utility.validConfigurationFileNumberEntry(appConfig.getString("Producer.intervalOfTerminationMessages")) && 
-					Utility.validConfigurationFileNumberEntry(appConfig.getString("Producer.intervalOfCancellationMessages"))) {
+			if(Utility.validConfigurationFileIntegerEntry(appConfig.getString("Producer.intervalOfTerminationMessages")) && 
+					Utility.validConfigurationFileIntegerEntry(appConfig.getString("Producer.intervalOfCancellationMessages"))) {
 		
 				intervalOfTerminationMessages = Integer.parseInt(appConfig.getString("Producer.intervalOfTerminationMessages"));
 				intervalOfCancellationMessages = Integer.parseInt(appConfig.getString("Producer.intervalOfCancellationMessages"));

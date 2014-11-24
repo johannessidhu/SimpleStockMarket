@@ -34,7 +34,7 @@ public class Utility {
 	 * @param inputNumberString
 	 * @return true if the input string is a valid number (for configuring the ResourceScheduler)
 	 */
-	public static boolean validConfigurationFileNumberEntry(String inputNumberString){
+	public static boolean validConfigurationFileIntegerEntry(String inputNumberString){
 
 		if(!stringChecker(inputNumberString)) {
 			LOGGER.error("The input string is either empty or null or only consist of empty space.");

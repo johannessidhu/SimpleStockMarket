@@ -80,8 +80,8 @@ public class ResourceScheduler {
 		/*
 		 * This block checks for the input from the loaded configuration file
 		 */
-		if(Utility.validConfigurationFileNumberEntry(appConfig.getString("ResourceScheduler.numberOFProducers")) && 
-				Utility.validConfigurationFileNumberEntry(appConfig.getString("ResourceScheduler.numberOFConsumers"))) {
+		if(Utility.validConfigurationFileIntegerEntry(appConfig.getString("ResourceScheduler.numberOFProducers")) && 
+				Utility.validConfigurationFileIntegerEntry(appConfig.getString("ResourceScheduler.numberOFConsumers"))) {
 	
 			numberOFProducers = Integer.parseInt(appConfig.getString("ResourceScheduler.numberOFProducers"));
 			numberOFConsumers = Integer.parseInt(appConfig.getString("ResourceScheduler.numberOFConsumers"));
