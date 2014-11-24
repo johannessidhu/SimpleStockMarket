@@ -17,6 +17,7 @@ import org.apache.commons.configuration.XMLConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import utilities.Utility;
 import dataSructures.MessageStorage;
 
 /**
@@ -29,45 +30,7 @@ public class ResourceScheduler {
 	private static final int DEFAULT_NUMBER_OF_PRODUCERS = 1;	
 	private static final int DEFAULT_NUMBER_OF_CONSUMERS = 1;	
 
-
 	protected static final GenericGateway GENERIC_GATEWAY = new GenericGateway();
-
-	/**
-	 * Utility method for checking input from the Apache configuration file
-	 * @param string
-	 * @return true if the string entered is not null, is not empty and does not consist of only white space 
-	 */
-	public static boolean stringChecker(final String string) {  
-		return (string != null && !string.isEmpty() && !string.trim().isEmpty());  
-	}
-
-	/**
-	 * Utility method to check if a string is a valid number for configuring the ResourceScheduler
-	 * @param inputNumberString
-	 * @return true if the input string is a valid number (for configuring the ResourceScheduler)
-	 */
-	public static boolean validConfigurationFileNumberEntry(String inputNumberString){
-
-		if(!stringChecker(inputNumberString)) {
-			LOGGER.error("The input string is either empty or null or only consist of empty space.");
-			return false;
-		}
-		else {
-			try {
-
-				if(Integer.parseInt(inputNumberString) < 0) {
-					LOGGER.error("For this application the assumption is all configuration numbers must be greater or equal to 0.");
-					return false;			}
-
-			} catch (NumberFormatException e) {
-				LOGGER.error("input number in the loaded configuration file is NaN.");
-				return false;
-			}
-		}
-		return true;
-	}
-
-
 
 	/**
 	 * Entry point to the application, it can take as argument one Apache configuration file, 
@@ -119,8 +82,8 @@ public class ResourceScheduler {
 		/*
 		 * This block checks for the input from the loaded configuration file
 		 */
-		if(validConfigurationFileNumberEntry(appConfig.getString("ResourceScheduler.numberOFProducers")) && 
-				validConfigurationFileNumberEntry(appConfig.getString("ResourceScheduler.numberOFConsumers"))) {
+		if(Utility.validConfigurationFileNumberEntry(appConfig.getString("ResourceScheduler.numberOFProducers")) && 
+				Utility.validConfigurationFileNumberEntry(appConfig.getString("ResourceScheduler.numberOFConsumers"))) {
 	
 			numberOFProducers = Integer.parseInt(appConfig.getString("ResourceScheduler.numberOFProducers"));
 			numberOFConsumers = Integer.parseInt(appConfig.getString("ResourceScheduler.numberOFConsumers"));
