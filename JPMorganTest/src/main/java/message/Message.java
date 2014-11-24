@@ -19,7 +19,12 @@ public interface Message extends Cloneable {
 	 * @return
 	 */
 	public long getGroupID();
-
+	
+	/**
+	 * Method that return the Data, this allows for other parts of the ResourceScheduler to access the data of a Message
+	 * @return
+	 */
+	public String getData();
 	
 	/**
 	 * The clone() method for object duplication. 

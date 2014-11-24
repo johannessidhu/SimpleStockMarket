@@ -6,7 +6,9 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import message.ConcreteMessageFactory;
 import message.Message;
+import message.MessageFactory;
 import message.StringMessage;
 
 
@@ -18,6 +20,9 @@ public class StringMessageTest {
 	private Message msg0; 
 	private Message msg2; 
 	private Message msg3; 
+	
+	private MessageFactory messageFactory = null; 
+
 
 	@Before
 	public void setUp() throws Exception {
@@ -25,6 +30,9 @@ public class StringMessageTest {
 		msg0 = new StringMessage(0, "msg0");
 		msg2 = new StringMessage(2, "msg2");
 		msg3 = new StringMessage(2, "msg2");
+		
+		messageFactory = new ConcreteMessageFactory(); 
+
 
 	}
 
@@ -43,9 +51,9 @@ public class StringMessageTest {
 
 		// change the message of the original StringMessage to something different
 
-		originalMsg.setStringMessage("changed Message");
+		originalMsg.setData("changed Message");
 		// if it was just a shallow copy than cloneMsg.getStringMessage would also change to "changed Message"		
-		assertEquals("msg0", cloneMsg.getStringMessage());
+		assertEquals("msg0", cloneMsg.getData());
 	}
 
 
@@ -68,7 +76,7 @@ public class StringMessageTest {
 	@Test
 	public void testGenerateRandomMessageGroupID() throws IllegalArgumentException {
 
-		StringMessage strMsgnew = (StringMessage) StringMessage.generateRandomMessage(10);
+		StringMessage strMsgnew = (StringMessage) messageFactory.generateRandomMessage(10);
 
 		boolean groupIDinRange = false;
 		if(strMsgnew.getGroupID() <= 10) {
@@ -85,10 +93,10 @@ public class StringMessageTest {
 	@Test
 	public void testGenerateRandomMessageStringMessage() throws IllegalArgumentException  {
 
-		StringMessage strMsgnew = (StringMessage) StringMessage.generateRandomMessage(1);
+		StringMessage strMsgnew = (StringMessage) messageFactory.generateRandomMessage(1);
 	
 		boolean groupIDinRange = false;
-		if(strMsgnew.getStringMessage().equalsIgnoreCase("msg0") == true) {
+		if(strMsgnew.getData().equalsIgnoreCase("msg0") == true) {
 			groupIDinRange = true;
 		}
 
@@ -104,11 +112,12 @@ public class StringMessageTest {
 	@Test(expected = IllegalArgumentException.class) 
 	public void testGenerateRandomMessageZero() {
 
-		StringMessage strMsgnew = (StringMessage) StringMessage.generateRandomMessage(0);
+		StringMessage strMsgnew = (StringMessage) messageFactory.generateRandomMessage(0);
 	}	
 
 	@After
 	public void tearDown() {
+		messageFactory = null;
 		msg0 = null;
 		msg2 = null;
 		msg3 = null;

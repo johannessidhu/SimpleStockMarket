@@ -19,16 +19,11 @@ public class StringMessage implements Message {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(StringMessage.class);	
 
-	private static final String TERMINATION_MESSAGE = "TERMINATION_MESSAGE";
-
-	private static final String CANCELLATION_MESSAGE = "CANCELLATION_MESSAGE";
-
-
 	// field to represent the groupId of the message, using Long instead of int to allow a greater number of GrouIds
 	private long groupID;
 
 	// field to represent the message in this class the message is a string
-	private String stringMessage; 
+	private String data; 
 
 	/**
 	 * Empty constructor
@@ -42,93 +37,17 @@ public class StringMessage implements Message {
 	 * */
 	public StringMessage() {
 		groupID = -1;
-		stringMessage = "";
+		data = "";
 	}
 
 	/**
 	 * Preferred constructor with explicitly setting the groupID
 	 * @param groupID
-	 * @param stringMessage
+	 * @param data
 	 */
 	public StringMessage(long groupID, String stringMessage) {
 		this.groupID = groupID;
-		this.stringMessage = stringMessage;
-	}
-
-	/**
-	 * This method returns a termination message for a particular groupID
-	 * @param groupID, of the group for which the Termination message should be created
-	 * @return termination Message
-	 * 
-	 * */
-	public static Message createTerminationMessage(long groupID) {
-
-		StringMessage terminationMessage = new StringMessage(groupID, TERMINATION_MESSAGE);
-
-		return terminationMessage;
-	}
-
-	/**
-	 * This method returns a termination message for a particular groupID
-	 * @param groupID, of the group for which the Termination message should be created
-	 * @return termination Message
-	 * 
-	 * */
-	public static Message createCancellationMessage(long groupID) {
-
-		StringMessage cancellationMessage = new StringMessage(groupID, CANCELLATION_MESSAGE);
-
-		return cancellationMessage;
-	}
-
-	/**
-	 * static method to create random Messages - used for testing purposes and demo the program
-	 * @param the exclusive upperLimit of the groupID, strictly generates groupIds < groupIdUpperLimit.
-	 * @return Message, new object of type Message is returned
-	 * @throws IllegalArgumentException
-	 * 
-	 * */
-	public static Message generateRandomMessage(long groupIdUpperLimit) throws IllegalArgumentException {
-
-		if(groupIdUpperLimit == 0) {
-			throw new IllegalArgumentException ();
-		}
-
-		Random rng = new Random();
-		// error checking and 2^x checking removed for simplicity.
-		long bits, generatedGroupID;
-		do {
-			bits = (rng.nextLong() << 1) >>> 1;
-			generatedGroupID = bits % groupIdUpperLimit;
-		} while (bits-generatedGroupID+(groupIdUpperLimit-1) < 0L);
-
-		StringMessage newStringMsg = new StringMessage(generatedGroupID, "msg"+generatedGroupID);
-
-		return newStringMsg;
-	}
-
-	/**
-	 * static method to create random Messages - used for testing purposes and demo the program,
-	 * it uses Long.MAX_VALUE as the upper limit
-	 * @return Message, new object of type Message is returned
-	 * @throws IllegalArgumentException
-	 * 
-	 * */
-	public static Message generateRandomMessage(){
-
-		long groupIdUpperLimit = Long.MAX_VALUE;
-
-		Random rng = new Random();
-		// error checking and 2^x checking removed for simplicity.
-		long bits, generatedGroupID;
-		do {
-			bits = (rng.nextLong() << 1) >>> 1;
-			generatedGroupID = bits % groupIdUpperLimit;
-		} while (bits-generatedGroupID+(groupIdUpperLimit-1) < 0L);
-
-		StringMessage newStringMsg = new StringMessage(generatedGroupID, "msg"+generatedGroupID);
-
-		return newStringMsg;
+		this.data = stringMessage;
 	}
 
 	/**
@@ -158,10 +77,10 @@ public class StringMessage implements Message {
 	}
 
 	/**
-	 * @return the stringMessage
+	 * @return the data
 	 */
-	public String getStringMessage() {
-		return stringMessage;
+	public String getData() {
+		return data;
 	}
 
 	/**
@@ -172,10 +91,10 @@ public class StringMessage implements Message {
 	}
 
 	/**
-	 * @param stringMessage the stringMessage to set
+	 * @param data the data to set
 	 */
-	public void setStringMessage(String stringMessage) {
-		this.stringMessage = stringMessage;
+	public void setData(String stringMessage) {
+		this.data = stringMessage;
 	}
 
 	/**
@@ -186,7 +105,7 @@ public class StringMessage implements Message {
 	public Object clone() throws CloneNotSupportedException {
 		StringMessage clone=(StringMessage)super.clone();
 		clone.groupID = this.groupID;
-		clone.stringMessage = this.stringMessage;
+		clone.data = this.data;
 		return clone;
 	}
 
@@ -202,7 +121,7 @@ public class StringMessage implements Message {
 		}
 
 		if( (cprToStringMsg.getGroupID() == this.getGroupID()) && 
-				(cprToStringMsg.getStringMessage().equalsIgnoreCase(this.getStringMessage())) ){
+				(cprToStringMsg.getData().equalsIgnoreCase(this.getData())) ){
 			return true; // return true if names are equal
 		}
 		return false;
@@ -211,6 +130,6 @@ public class StringMessage implements Message {
 	@Override
 	public String toString() {
 
-		return "Message: GroupID = " + groupID + " Message String = " + stringMessage;
+		return "Message: GroupID = " + groupID + " Message String = " + data;
 	}
 }

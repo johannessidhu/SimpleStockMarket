@@ -9,7 +9,9 @@ import org.junit.Test;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
+import message.ConcreteMessageFactory;
 import message.Message;
+import message.MessageFactory;
 import message.StringMessage;
 import dataSructures.MessageStorage;
 
@@ -31,9 +33,15 @@ public class ProducerTest {
 	private Message msg3; 
 	private Message msg4;
 	private Message terminationMessage;
+	
+	private MessageFactory messageFactory = null; 
+
 
 	@Before
 	public void setUp() throws Exception {
+
+		
+		messageFactory = new ConcreteMessageFactory(); 
 
 		// From the requirements/specification document
 		msg1 = new StringMessage(2, "msg1");
@@ -41,7 +49,7 @@ public class ProducerTest {
 		msg3 = new StringMessage(2, "msg3");
 		msg4 = new StringMessage(3, "msg4");
 		
-		terminationMessage = StringMessage.createTerminationMessage(3);
+		terminationMessage = messageFactory.createTerminationMessage(3);
 		
 		queue = new LinkedBlockingQueue<Message>();
 		messageStorage = new MessageStorage();
@@ -93,6 +101,7 @@ public class ProducerTest {
 		queue = null;
 		messageStorage = null;
 		producer = null;
+		messageFactory = null;
 	}
 
 }
@@ -107,11 +116,11 @@ public class ProducerTest {
 class TestProducer implements Runnable{
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(TestProducer.class);	
-
-	// To represent the extra credit, Termination Messages
 	
 	private final static StringMessage POISON = new StringMessage(-1,"POISON"); 
 
+	private MessageFactory messageFactory = null; 
+	
 	protected BlockingQueue<Message> queue = null;
 
 	protected MessageStorage messageStorage = null;
@@ -130,12 +139,14 @@ class TestProducer implements Runnable{
 	public void run() {
 		try {
 
+			messageFactory = new ConcreteMessageFactory();
+			
 			Message msg1 = new StringMessage(2, "msg1");
 			Message msg2 = new StringMessage(1, "msg2");
 			Message msg3 = new StringMessage(2, "msg3");
 			Message msg4 = new StringMessage(3, "msg4");
 
-			Message terminationMessage = StringMessage.createTerminationMessage(3);
+			Message terminationMessage = messageFactory.createTerminationMessage(3);
 			
 			// add the Message to the queue
 			queue.put(msg1);

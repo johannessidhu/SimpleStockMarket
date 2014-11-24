@@ -58,7 +58,7 @@ public class MessageStorageTest {
 		// caste the first Message to StringMessage 
 		StringMessage strMsg0 = (StringMessage)removedList.take();
 
-		assertEquals("msg2", strMsg0.getStringMessage());
+		assertEquals("msg2", strMsg0.getData());
 	}
 
 	/**

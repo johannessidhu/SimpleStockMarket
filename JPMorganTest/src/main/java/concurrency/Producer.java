@@ -8,6 +8,8 @@ import org.slf4j.LoggerFactory;
 
 import utilities.Utility;
 import dataSructures.MessageStorage;
+import message.ConcreteMessageFactory;
+import message.MessageFactory;
 import message.Message;
 import message.StringMessage;
 
@@ -30,6 +32,8 @@ public class Producer implements Runnable{
 
 	// POISON added as the very last message in the process, when no more messages are going to be received from any group, to terminate all threads
 	private final static StringMessage POISON = new StringMessage(-1,"POISON"); 
+	
+	private MessageFactory messageFactory = null; 
 
 	protected BlockingQueue<Message> queue = null;
 
@@ -37,11 +41,11 @@ public class Producer implements Runnable{
 	
 	protected XMLConfiguration appConfig = null;
 
-
 	public Producer(BlockingQueue<Message> queue, MessageStorage messageStorage, XMLConfiguration appConfig) {
 		this.queue = queue;
 		this.messageStorage = messageStorage;
 		this.appConfig = appConfig;
+		this.messageFactory = new ConcreteMessageFactory();
 	}
 
 	/**
@@ -96,7 +100,7 @@ public class Producer implements Runnable{
 			for(int x = 1; x <= numberOFMessages; x++) {
 
 				// the randomly generated Message object
-				Message newMessage =  StringMessage.generateRandomMessage(upperBoundForGroupID);
+				Message newMessage =  messageFactory.generateRandomMessage(upperBoundForGroupID);
 
 				/*
 				 * 
@@ -109,12 +113,12 @@ public class Producer implements Runnable{
 				
 				// Extra credit for Termination Message for a particular groupID - this if statement turns a newMessage into a termination message
 				if(x % intervalOfTerminationMessages == 0) {
-					newMessage = (StringMessage) StringMessage.createTerminationMessage(newMessage.getGroupID());
+					newMessage = (StringMessage) messageFactory.createTerminationMessage(newMessage.getGroupID());
 				}
 
 				// Extra credit for Cancellation Message for a particular groupID - this if statement turns a newMessage into a cancellation message
 				if(x % intervalOfCancellationMessages == 0) {
-					newMessage = (StringMessage) StringMessage.createCancellationMessage(newMessage.getGroupID());
+					newMessage = (StringMessage) messageFactory.createCancellationMessage(newMessage.getGroupID());
 				}
 				
 				

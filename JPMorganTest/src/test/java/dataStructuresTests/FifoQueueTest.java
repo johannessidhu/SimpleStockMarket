@@ -48,7 +48,7 @@ public class FifoQueueTest {
 
 		StringMessage strMsg0 = (StringMessage)fifoQ.dequeue();
 		System.out.println(fifoQ.size());
-		assertEquals("msg0", strMsg0.getStringMessage());
+		assertEquals("msg0", strMsg0.getData());
 	}
 
 	/**
@@ -60,7 +60,7 @@ public class FifoQueueTest {
 
 		fifoQ.dequeue();
 		StringMessage strMsg1 = (StringMessage)fifoQ.dequeue();
-		assertEquals("msg1", strMsg1.getStringMessage());
+		assertEquals("msg1", strMsg1.getData());
 	}
 
 	/**
@@ -75,7 +75,7 @@ public class FifoQueueTest {
 		}
 
 		StringMessage strMsg1 = (StringMessage)fifoQ.dequeue();
-		assertEquals("msg1", strMsg1.getStringMessage());
+		assertEquals("msg1", strMsg1.getData());
 	}
 
 	/**
