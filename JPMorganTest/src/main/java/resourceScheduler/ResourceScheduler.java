@@ -31,7 +31,7 @@ public class ResourceScheduler {
 	protected static final GenericGateway GENERIC_GATEWAY = new GenericGateway();
 
 	/**
-	 * Entry point to the application, it can take as argument one Apache configuration file, 
+	 * Entry point to the application, it can take as argument an Apache configuration file, 
 	 * otherwise it loads the default xml configuration file in the directory resources/META-INF
 	 * @param args
 	 */
@@ -39,7 +39,7 @@ public class ResourceScheduler {
 
 		final ResourceScheduler application = new ResourceScheduler();
 
-		LOGGER.info("Starting schedulerTests");
+		LOGGER.info("Starting Resource Scheduler");
 
 		XMLConfiguration appConfig = null;
 
@@ -64,7 +64,7 @@ public class ResourceScheduler {
 			application.start(appConfig);
 		}
 		catch (final Exception e) {
-			LOGGER.error("ResourceScheduler failed", e);
+			LOGGER.error("Resource Scheduler failed", e);
 		}
 	}
 
@@ -127,7 +127,7 @@ public class ResourceScheduler {
 		while (!consumerExecutor.isTerminated() || !producerExecutor.isTerminated() ) {
 		}
 
-		LOGGER.info("Application finished.");
+		LOGGER.info("Resource Scheduler finished.");
 
 	}
 
