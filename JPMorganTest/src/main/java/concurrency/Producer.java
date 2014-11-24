@@ -57,7 +57,7 @@ public class Producer implements Runnable{
 			int intervalOfTerminationMessages = 0;
 			int intervalOfCancellationMessages = 0;
 			int intervalOfMessages = 0;
-
+			long upperBoundForGroupID = 0L;
 			
 			/*
 			 * This block checks for the input from the loaded configuration file
@@ -72,7 +72,6 @@ public class Producer implements Runnable{
 
 			/*
 			 * This block also checks for the input from the loaded configuration file
-			 * I split it into 2 blocks for better readability, grouped by aspect
 			 */
 			if(Utility.validConfigurationFileIntegerEntry(appConfig.getString("Producer.intervalOfTerminationMessages")) && 
 					Utility.validConfigurationFileIntegerEntry(appConfig.getString("Producer.intervalOfCancellationMessages"))) {
@@ -81,13 +80,23 @@ public class Producer implements Runnable{
 				intervalOfCancellationMessages = Integer.parseInt(appConfig.getString("Producer.intervalOfCancellationMessages"));
 
 			}
+
+			/*
+			 * This block checks for the input from the loaded configuration file specifically for Long value
+ 			 * I split it into 2 blocks for better readability, grouped by aspect
+			 */
+			if(Utility.validConfigurationFileLongEntry(appConfig.getString("Producer.upperBoundForGroupID"))) {
+		
+				upperBoundForGroupID = Long.parseLong(appConfig.getString("Producer.upperBoundForGroupID"));
+
+			}
 			
 			Random rnd = new Random();
 			// I decided to run the producer for x iterations to allow for testing and for demoing the application
 			for(int x = 1; x <= numberOFMessages; x++) {
 
 				// the randomly generated Message object
-				StringMessage newMessage = (StringMessage) StringMessage.generateRandomMessage(2);
+				StringMessage newMessage = (StringMessage) StringMessage.generateRandomMessage(upperBoundForGroupID);
 				newMessage.setStringMessage("msg" + x);
 				// add the new Message to the queue
 
