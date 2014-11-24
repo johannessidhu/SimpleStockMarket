@@ -59,7 +59,7 @@ public class Producer implements Runnable{
 			
 			Random rnd = new Random();
 			// I decided to run the producer for x iterations to allow for testing and for demoing the application
-			for(int x = 0; x <= numberOFMessages; x++) {
+			for(int x = 1; x <= numberOFMessages; x++) {
 
 				// the randomly generated Message object
 				StringMessage newMessage = (StringMessage) StringMessage.generateRandomMessage(2);

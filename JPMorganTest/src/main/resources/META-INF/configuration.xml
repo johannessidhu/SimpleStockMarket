@@ -4,8 +4,8 @@
 
 	<!-- Configuration values for the ResourceScheduler -->
 	<ResourceScheduler>
-		<numberOFProducers>1</numberOFProducers>
-		<numberOFConsumers>2</numberOFConsumers>
+		<numberOFProducers>w</numberOFProducers>
+		<numberOFConsumers>w</numberOFConsumers>
 	</ResourceScheduler>
 
 	<!-- Configuration values for the Producer -->

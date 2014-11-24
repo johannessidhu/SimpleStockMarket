@@ -31,7 +31,7 @@ public class ConsumerProducerFactory {
 	 * @param numberOFProducers
 	 * @return
 	 */
-	public ExecutorService providesProducerExecutor() {
+	public ExecutorService providesProducerExecutor() throws IllegalArgumentException{
 		return Executors.newFixedThreadPool(numberOFProducers);
 	}
 

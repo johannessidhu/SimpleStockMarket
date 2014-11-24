@@ -195,11 +195,16 @@ public class Consumer implements Runnable{
 	 * */
 	private void processCancellationMessage(StringMessage strMsg) {
 
-		// remove all messages with the groupID to be cancelled 
-		queue.removeAll(messageStorage.getBlockingQueue(strMsg.getGroupID()));
-		// remove all messages from the store
-		messageStorage.removeMessagesFromStorage(strMsg.getGroupID());
-		// add CANCELLATION_MESSAGE to storage for further use
+		//System.err.println(strMsg.getGroupID());
+		
+		if(messageStorage.getBlockingQueue(strMsg.getGroupID()) != null) {
+			// remove all messages with the groupID to be cancelled 
+			queue.removeAll(messageStorage.getBlockingQueue(strMsg.getGroupID()));
+			// remove all messages from the store
+			messageStorage.removeMessagesFromStorage(strMsg.getGroupID());
+		}
+		
+		// add CANCELLATION_MESSAGE to replace the currently taken message to storage for further use
 		messageStorage.addMessageToStorage(StringMessage.createCancellationMessage(strMsg.getGroupID()));
 
 		LOGGER.info("All messages for groupID " + strMsg.getGroupID() + " are cancelled.");
