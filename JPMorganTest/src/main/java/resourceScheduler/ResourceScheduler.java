@@ -24,19 +24,17 @@ public class ResourceScheduler {
 	 * @param args
 	 */
 	public static void main(final String[] args) {
-
 		final ResourceScheduler application = new ResourceScheduler();
 		LOGGER.info("Starting Resource Scheduler");
 		XMLConfiguration appConfig = null;
 
 		try {
-			// if no arguments passed then load the default configuration file.
-			if (args.length == 0) {
-				appConfig = new XMLConfiguration("META-INF/configuration.xml");
-				LOGGER.info("Default configuration was loaded.");
-			} else if (args.length == 1) { 
+			if (args != null && args.length == 1) { 
 				appConfig = new XMLConfiguration(args[0]);
 				LOGGER.info("Provided " + args[0]+ "configuration file was loaded.");
+			} else {
+				appConfig = new XMLConfiguration("META-INF/configuration.xml");
+				LOGGER.info("Default configuration was loaded.");
 			}
 		} catch (ConfigurationException cex) {
 			LOGGER.error("Could not read the xml file." + cex.toString());
@@ -62,7 +60,7 @@ public class ResourceScheduler {
 			numberOFProducers = Integer.parseInt(appConfig.getString("ResourceScheduler.numberOFProducers"));
 			numberOFConsumers = Integer.parseInt(appConfig.getString("ResourceScheduler.numberOFConsumers"));
 		}
-		
+
 		if (numberOFConsumers <= 0 || numberOFProducers <= 0) {
 			LOGGER.error("Please specify at least 1 Consumer and 1 Producer in the configuration file. "
 					+ "Exiting Resource Scheduler with System.exit(0).");

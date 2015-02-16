@@ -2,6 +2,8 @@ package message;
 
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
+
+import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -72,6 +74,14 @@ public class StringMessage implements Message {
 
 		return clone;
 	}
+	
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder(433, 1499). 
+            append(groupID).
+            append(data).
+            toHashCode();
+    }
 
 	@Override
 	public boolean equals(Object obj) {
