@@ -68,12 +68,4 @@ public class MessageStorage{
 		return messageStorage.get(groupID);
 	}
 
-	public ConcurrentHashMap <Long, LinkedBlockingQueue<Message>> getMessageStorage() {
-		return messageStorage;
-	}
-
-	public void setMessageStorage(ConcurrentHashMap <Long, LinkedBlockingQueue<Message>> messageStorage) {
-		this.messageStorage = messageStorage;
-	}
-
 }

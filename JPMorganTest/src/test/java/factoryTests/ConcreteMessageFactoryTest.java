@@ -19,17 +19,6 @@ public class ConcreteMessageFactoryTest {
 	}
 
 	@Test
-	public void testGenerateRandomMessage(){
-		Object objMsg = messageFactory.generateRandomMessage();
-
-		if (objMsg instanceof Message) {
-			assertEquals(true, true);
-		} else {
-			assertEquals(false, false);
-		}
-	}
-
-	@Test
 	public void testGenerateRandomMessageUpperLimit() throws IllegalArgumentException{
 		Object objMsg = messageFactory.generateRandomMessage(10);
 		Message msg = null;

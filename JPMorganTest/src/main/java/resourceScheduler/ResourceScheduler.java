@@ -10,7 +10,7 @@ import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.XMLConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import utilities.Utility;
+import utilities.ConfigurationFileValidator;
 import dataSructures.MessageStorage;
 
 public class ResourceScheduler {
@@ -57,8 +57,8 @@ public class ResourceScheduler {
 		int numberOFProducers = 0;
 		int numberOFConsumers = 0;
 
-		if (Utility.isValidConfigurationFileIntegerEntry(appConfig.getString("ResourceScheduler.numberOFProducers")) && 
-				Utility.isValidConfigurationFileIntegerEntry(appConfig.getString("ResourceScheduler.numberOFConsumers"))) {
+		if (ConfigurationFileValidator.isValidConfigurationFileIntegerEntry(appConfig.getString("ResourceScheduler.numberOFProducers")) && 
+				ConfigurationFileValidator.isValidConfigurationFileIntegerEntry(appConfig.getString("ResourceScheduler.numberOFConsumers"))) {
 			numberOFProducers = Integer.parseInt(appConfig.getString("ResourceScheduler.numberOFProducers"));
 			numberOFConsumers = Integer.parseInt(appConfig.getString("ResourceScheduler.numberOFConsumers"));
 		}

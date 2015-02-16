@@ -5,12 +5,12 @@ import org.slf4j.LoggerFactory;
 
 /**
  * 
- * Class provide some helper methods that are used throughout this project i.e. cross cutting concerns that reappear 
+ * Class provide some helper methods for validating strings, integers and longs. 
  * @author Johannes Sidhu
  * */
-public class Utility {
+public class ConfigurationFileValidator {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(Utility.class);	
+	private static final Logger LOGGER = LoggerFactory.getLogger(ConfigurationFileValidator.class);	
 
 	public static boolean isValidString(final String string) {  
 		return (string != null && !string.isEmpty() && !string.trim().isEmpty());  

@@ -4,9 +4,9 @@ import static org.junit.Assert.assertEquals;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import utilities.Utility;
+import utilities.ConfigurationFileValidator;
 
-public class UtilityTest {
+public class ConfigurationFileValidatorTest {
 
 	@Before
 	public void setUp() throws Exception {
@@ -14,27 +14,27 @@ public class UtilityTest {
 
 	@Test
 	public void testStringCheckerDash() {
-		assertEquals(true, Utility.isValidString(" - "));
+		assertEquals(true, ConfigurationFileValidator.isValidString(" - "));
 	}
 	
 	@Test
 	public void testStringCheckerEmpty() {
-		assertEquals(false, Utility.isValidString(""));
+		assertEquals(false, ConfigurationFileValidator.isValidString(""));
 	}
 	
 	@Test
 	public void testStringCheckerWhitespace() {
-		assertEquals(false, Utility.isValidString("  "));
+		assertEquals(false, ConfigurationFileValidator.isValidString("  "));
 	}
 	
 	@Test
 	public void testStringCheckerNull() {
-		assertEquals(false, Utility.isValidString(null));
+		assertEquals(false, ConfigurationFileValidator.isValidString(null));
 	}
 
 	@Test
 	public void testValidConfigurationFileIntegerEntryTrue() {
-		assertEquals(true, Utility.isValidConfigurationFileIntegerEntry("123"));
+		assertEquals(true, ConfigurationFileValidator.isValidConfigurationFileIntegerEntry("123"));
 	}
 	
 	@Test
@@ -42,34 +42,34 @@ public class UtilityTest {
 		String maxPlusOne = String.valueOf(Integer.MAX_VALUE+1);
 		System.out.println(maxPlusOne);
 		
-		assertEquals(false, Utility.isValidConfigurationFileIntegerEntry(maxPlusOne));
+		assertEquals(false, ConfigurationFileValidator.isValidConfigurationFileIntegerEntry(maxPlusOne));
 	}
 
 	@Test
 	public void testValidConfigurationFileIntegerEntryNegativeNumber() {
-		assertEquals(false, Utility.isValidConfigurationFileIntegerEntry("-123"));
+		assertEquals(false, ConfigurationFileValidator.isValidConfigurationFileIntegerEntry("-123"));
 	}
 	
 	@Test
 	public void testValidConfigurationFileIntegerEntryEmpty() {
-		assertEquals(false, Utility.isValidConfigurationFileIntegerEntry(""));
+		assertEquals(false, ConfigurationFileValidator.isValidConfigurationFileIntegerEntry(""));
 	}
 	
 	@Test
 	public void testValidConfigurationFileIntegerEntryNaN() {
-		assertEquals(false, Utility.isValidConfigurationFileIntegerEntry("Text"));
+		assertEquals(false, ConfigurationFileValidator.isValidConfigurationFileIntegerEntry("Text"));
 	}
 	
 	@Test
 	public void testValidConfigurationFileIntegerEntryNull() {
-		assertEquals(false, Utility.isValidConfigurationFileIntegerEntry(null));
+		assertEquals(false, ConfigurationFileValidator.isValidConfigurationFileIntegerEntry(null));
 	}
 	
 	@Test
 	public void testValidConfigurationFileLongEntryTrue() {
 		String maxInteger = String.valueOf(Integer.MAX_VALUE);
 
-		assertEquals(true, Utility.isValidConfigurationFileLongEntry(maxInteger));
+		assertEquals(true, ConfigurationFileValidator.isValidConfigurationFileLongEntry(maxInteger));
 	}
 	
 	@Test
@@ -77,27 +77,27 @@ public class UtilityTest {
 		String maxPlusOne = String.valueOf(Long.MAX_VALUE+1);
 		System.out.println(maxPlusOne);
 		
-		assertEquals(false, Utility.isValidConfigurationFileLongEntry(maxPlusOne));
+		assertEquals(false, ConfigurationFileValidator.isValidConfigurationFileLongEntry(maxPlusOne));
 	}
 
 	@Test
 	public void testValidConfigurationFileLongEntryNegativeNumber() {
-		assertEquals(false, Utility.isValidConfigurationFileLongEntry("-123"));
+		assertEquals(false, ConfigurationFileValidator.isValidConfigurationFileLongEntry("-123"));
 	}
 	
 	@Test
 	public void testValidConfigurationFileLongEntryEmpty() {
-		assertEquals(false, Utility.isValidConfigurationFileLongEntry(""));
+		assertEquals(false, ConfigurationFileValidator.isValidConfigurationFileLongEntry(""));
 	}
 	
 	@Test
 	public void testValidConfigurationFileLongEntryNaN() {
-		assertEquals(false, Utility.isValidConfigurationFileLongEntry("Text"));
+		assertEquals(false, ConfigurationFileValidator.isValidConfigurationFileLongEntry("Text"));
 	}
 	
 	@Test
 	public void testValidConfigurationFileLongEntryNull() {
-		assertEquals(false, Utility.isValidConfigurationFileLongEntry(null));
+		assertEquals(false, ConfigurationFileValidator.isValidConfigurationFileLongEntry(null));
 	}
 	
 	@After

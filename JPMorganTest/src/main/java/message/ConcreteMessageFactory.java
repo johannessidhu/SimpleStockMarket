@@ -25,22 +25,6 @@ public class ConcreteMessageFactory implements MessageFactory {
 
 		return newStringMsg;
 	}
-
-	@Override
-	public Message generateRandomMessage(){
-		long groupIdUpperLimit = Long.MAX_VALUE;
-		Random rng = new Random();
-		// error checking and 2^x checking removed for simplicity.
-		long bits, generatedGroupID;
-		do {
-			bits = (rng.nextLong() << 1) >>> 1;
-			generatedGroupID = bits % groupIdUpperLimit;
-		} while (bits-generatedGroupID+(groupIdUpperLimit-1) < 0L);
-
-		StringMessage newStringMsg = new StringMessage(generatedGroupID, "msg"+generatedGroupID);
-
-		return newStringMsg;
-	}
 	
 	@Override
 	public Message createTerminationMessage(long groupID) throws IllegalArgumentException{

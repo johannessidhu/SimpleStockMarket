@@ -5,7 +5,7 @@ import java.util.concurrent.TimeUnit;
 import org.apache.commons.configuration.XMLConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import utilities.Utility;
+import utilities.ConfigurationFileValidator;
 import dataSructures.MessageStorage;
 import message.ConcreteMessageFactory;
 import message.MessageFactory;
@@ -55,19 +55,19 @@ public class Producer implements Runnable {
 			int intervalOfMessages = 0;
 			long upperBoundForGroupID = 0;
 			
-			if (Utility.isValidConfigurationFileIntegerEntry(appConfig.getString("Producer.numberOFMessagesToBeProduced")) && 
-					Utility.isValidConfigurationFileIntegerEntry(appConfig.getString("Producer.intervalOfMessages"))) {
+			if (ConfigurationFileValidator.isValidConfigurationFileIntegerEntry(appConfig.getString("Producer.numberOFMessagesToBeProduced")) && 
+					ConfigurationFileValidator.isValidConfigurationFileIntegerEntry(appConfig.getString("Producer.intervalOfMessages"))) {
 				numberOFMessages = Integer.parseInt(appConfig.getString("Producer.numberOFMessagesToBeProduced"));
 				intervalOfMessages = Integer.parseInt(appConfig.getString("Producer.intervalOfMessages"));
 			}
 
-			if (Utility.isValidConfigurationFileIntegerEntry(appConfig.getString("Producer.intervalOfTerminationMessages")) && 
-					Utility.isValidConfigurationFileIntegerEntry(appConfig.getString("Producer.intervalOfCancellationMessages"))) {
+			if (ConfigurationFileValidator.isValidConfigurationFileIntegerEntry(appConfig.getString("Producer.intervalOfTerminationMessages")) && 
+					ConfigurationFileValidator.isValidConfigurationFileIntegerEntry(appConfig.getString("Producer.intervalOfCancellationMessages"))) {
 				intervalOfTerminationMessages = Integer.parseInt(appConfig.getString("Producer.intervalOfTerminationMessages"));
 				intervalOfCancellationMessages = Integer.parseInt(appConfig.getString("Producer.intervalOfCancellationMessages"));
 			}
 
-			if (Utility.isValidConfigurationFileLongEntry(appConfig.getString("Producer.upperBoundForGroupID"))) {
+			if (ConfigurationFileValidator.isValidConfigurationFileLongEntry(appConfig.getString("Producer.upperBoundForGroupID"))) {
 				upperBoundForGroupID = Long.parseLong(appConfig.getString("Producer.upperBoundForGroupID"));
 			}
 			

@@ -60,10 +60,6 @@ public class StringMessage implements Message {
 		return data;
 	}
 
-	public void setGroupID(long groupID) {
-		this.groupID = groupID;
-	}
-
 	public void setData(String stringMessage) {
 		this.data = stringMessage;
 	}

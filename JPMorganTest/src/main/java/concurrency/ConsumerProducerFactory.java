@@ -34,20 +34,4 @@ public class ConsumerProducerFactory {
 		return new Consumer(queue, messageStorage, genericGateway);
 	}
 
-	public int getNumberOFProducers() {
-		return numberOFProducers;
-	}
-
-	public int getNumberOFConsumers() {
-		return numberOFConsumers;
-	}
-
-	public void setNumberOFProducers(int numberOFProducers) {
-		this.numberOFProducers = numberOFProducers;
-	}
-
-	public void setNumberOFConsumers(int numberOFConsumers) {
-		this.numberOFConsumers = numberOFConsumers;
-	}
-
 }
