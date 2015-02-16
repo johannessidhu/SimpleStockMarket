@@ -1,73 +1,46 @@
 package schedulerTests;
 
 import static org.junit.Assert.assertEquals;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
-
 import message.ConcreteMessageFactory;
 import message.Message;
 import message.MessageFactory;
 import message.StringMessage;
 import dataSructures.MessageStorage;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/**
- * Unit tests for TestProducer class
- */
 public class ProducerTest {
 
 	private BlockingQueue<Message> queue;
 	private MessageStorage messageStorage;
-
 	private TestProducer producer;
-	
 	private Message msg1; 
 	private Message msg2; 
 	private Message msg3; 
 	private Message msg4;
 	private Message terminationMessage;
-	
 	private MessageFactory messageFactory = null; 
-
 
 	@Before
 	public void setUp() throws Exception {
-
-		
 		messageFactory = new ConcreteMessageFactory(); 
-
-		// From the requirements/specification document
 		msg1 = new StringMessage(2, "msg1");
 		msg2 = new StringMessage(1, "msg2");
 		msg3 = new StringMessage(2, "msg3");
 		msg4 = new StringMessage(3, "msg4");
-		
 		terminationMessage = messageFactory.createTerminationMessage(3);
-		
 		queue = new LinkedBlockingQueue<Message>();
 		messageStorage = new MessageStorage();
-
 		producer = new TestProducer(queue, messageStorage);
-
 	}
 	
-	/**
-	 * Test the scheduling of the messages  
-	 * Expected take sequence (FIFO): msg1 -> msg2 -> msg3 -> msg4
-	 * @throws InterruptedException 
-	 * 
-	 * */
 	@Test
 	public void testProducerFromSpecSheetQueue() throws InterruptedException{
-
-		// Run producer
 		producer.run();
 		
 		assertEquals(msg1, queue.take());
@@ -75,25 +48,15 @@ public class ProducerTest {
 		assertEquals(msg3, queue.take());
 		assertEquals(terminationMessage, queue.take());
 		assertEquals(msg4, queue.take());
-		
 	}
 
-	/**
-	 * Test the adding of the messages to the messageStorage  
-	 * @throws InterruptedException 
-	 * 
-	 * */
 	@Test
 	public void testProducerFromSpecSheetMessageStorage() throws InterruptedException{
-
-		// Run producer
 		producer.run();
 		
-		// take from messageStorage
 		assertEquals(msg1, messageStorage.removeMessagesFromStorage(2).take()); // first message in the FIFO queue for groupID 2
 		assertEquals(msg2, messageStorage.removeMessagesFromStorage(1).take());		
 		assertEquals(terminationMessage, messageStorage.removeMessagesFromStorage(3).take());
-		
 	}
 	
 	@After
@@ -199,5 +162,3 @@ class TestProducer implements Runnable{
 	}
 
 }
-
-

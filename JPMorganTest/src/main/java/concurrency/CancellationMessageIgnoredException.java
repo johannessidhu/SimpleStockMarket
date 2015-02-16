@@ -10,11 +10,8 @@ public class CancellationMessageIgnoredException extends RuntimeException {
 
 	private static final long serialVersionUID = -6919839264211953593L;
 
-	/**
-	 * Constructor for CancellationMessageIgnoredException 
-	 * @param error
-	 */
 	public CancellationMessageIgnoredException(String error) {
 		super(error);
 	}
+
 }

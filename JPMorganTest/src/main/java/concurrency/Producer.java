@@ -1,18 +1,16 @@
 package concurrency;
+
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.TimeUnit;
-
 import org.apache.commons.configuration.XMLConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import utilities.Utility;
 import dataSructures.MessageStorage;
 import message.ConcreteMessageFactory;
 import message.MessageFactory;
 import message.Message;
 import message.StringMessage;
-
 import java.util.Random;
 
 /**
@@ -26,19 +24,15 @@ import java.util.Random;
  * 
  * @author Johannes Sidhu
  * */
-public class Producer implements Runnable{
+public class Producer implements Runnable {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(Producer.class);	
-
 	// POISON added as the very last message in the process, when no more messages are going to be received from any group, to terminate all threads
 	private final static StringMessage POISON = new StringMessage(-1,"POISON"); 
-	
 	private MessageFactory messageFactory = null; 
 
 	protected BlockingQueue<Message> queue = null;
-
 	protected MessageStorage messageStorage = null;
-	
 	protected XMLConfiguration appConfig = null;
 
 	public Producer(BlockingQueue<Message> queue, MessageStorage messageStorage, XMLConfiguration appConfig) {
@@ -52,90 +46,51 @@ public class Producer implements Runnable{
 	 * run() method for the producer which simulates the adding of messages to the queue and MessageStorage
 	 * This method generated random messages and adds them to the afore mentioned data structures 
 	 * with groupIDs from 0 to Long.MAX_VALUE
-	 * 
 	 * */
 	public void run() {
 		try {
-
 			int numberOFMessages = 0;
 			int intervalOfTerminationMessages = 0;
 			int intervalOfCancellationMessages = 0;
 			int intervalOfMessages = 0;
 			long upperBoundForGroupID = 0;
 			
-			/*
-			 * This block checks for the input from the loaded configuration file
-			 */
-			if(Utility.validConfigurationFileIntegerEntry(appConfig.getString("Producer.numberOFMessagesToBeProduced")) && 
-					Utility.validConfigurationFileIntegerEntry(appConfig.getString("Producer.intervalOfMessages"))) {
-		
+			if (Utility.isValidConfigurationFileIntegerEntry(appConfig.getString("Producer.numberOFMessagesToBeProduced")) && 
+					Utility.isValidConfigurationFileIntegerEntry(appConfig.getString("Producer.intervalOfMessages"))) {
 				numberOFMessages = Integer.parseInt(appConfig.getString("Producer.numberOFMessagesToBeProduced"));
 				intervalOfMessages = Integer.parseInt(appConfig.getString("Producer.intervalOfMessages"));
-
 			}
 
-			/*
-			 * This block also checks for the input from the loaded configuration file
-			 */
-			if(Utility.validConfigurationFileIntegerEntry(appConfig.getString("Producer.intervalOfTerminationMessages")) && 
-					Utility.validConfigurationFileIntegerEntry(appConfig.getString("Producer.intervalOfCancellationMessages"))) {
-		
+			if (Utility.isValidConfigurationFileIntegerEntry(appConfig.getString("Producer.intervalOfTerminationMessages")) && 
+					Utility.isValidConfigurationFileIntegerEntry(appConfig.getString("Producer.intervalOfCancellationMessages"))) {
 				intervalOfTerminationMessages = Integer.parseInt(appConfig.getString("Producer.intervalOfTerminationMessages"));
 				intervalOfCancellationMessages = Integer.parseInt(appConfig.getString("Producer.intervalOfCancellationMessages"));
-
 			}
 
-			/*
-			 * This block checks for the input from the loaded configuration file specifically for Long value
- 			 * I split it into 3 blocks for better readability, grouped by aspect
-			 */
-			if(Utility.validConfigurationFileLongEntry(appConfig.getString("Producer.upperBoundForGroupID"))) {
-		
+			if (Utility.isValidConfigurationFileLongEntry(appConfig.getString("Producer.upperBoundForGroupID"))) {
 				upperBoundForGroupID = Long.parseLong(appConfig.getString("Producer.upperBoundForGroupID"));
-
 			}
 			
 			Random rnd = new Random();
 			// I decided to run the producer for x iterations to allow for testing and for demoing the application
 			for(int x = 1; x <= numberOFMessages; x++) {
-
-				// the randomly generated Message object
 				Message newMessage =  messageFactory.generateRandomMessage(upperBoundForGroupID);
 
-				/*
-				 * 
-				 * The two commented lines below can be used in conjunction to allow for better overview when observing the behaviour of the ResourceScheduler.
-				 * It sets the StringMessage's stringMessage field to the current x i.e. the xth generated message.
-				 *
-				 * 	Message newMessage = StringMessage.generateRandomMessage(upperBoundForGroupID);
-				 *	newMessage.setStringMessage("msg" + x);
-				 * */
-				
-				// Extra credit for Termination Message for a particular groupID - this if statement turns a newMessage into a termination message
 				if(x % intervalOfTerminationMessages == 0) {
 					newMessage = (StringMessage) messageFactory.createTerminationMessage(newMessage.getGroupID());
 				}
 
-				// Extra credit for Cancellation Message for a particular groupID - this if statement turns a newMessage into a cancellation message
 				if(x % intervalOfCancellationMessages == 0) {
 					newMessage = (StringMessage) messageFactory.createCancellationMessage(newMessage.getGroupID());
 				}
-				
-				
-				// add the message to the FIFO queue 
+
 				queue.put(newMessage);
-
-				// add the new Message to the messageStorage
 				messageStorage.addMessageToStorage(newMessage);
-
-				// Log the information 
 				LOGGER.info("Added: " + newMessage);
-
 				// simulate a random intervals of messages being added to the queue, used TimeUnit instead of Thread.sleep(), for readability 
 				TimeUnit.MILLISECONDS.sleep(rnd.nextInt(intervalOfMessages));
 			}
 
-			// Signal the end of the transmission of all message, I added this to allow for testing and for demoing the application
 			queue.put(POISON);
 
 		} catch (InterruptedException e) {
@@ -143,5 +98,5 @@ public class Producer implements Runnable{
 			e.printStackTrace();
 		}
 	}
-	
+
 }
