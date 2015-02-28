@@ -1,9 +1,13 @@
 package messageTests;
 
 import static org.junit.Assert.assertEquals;
+
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
+
 import message.ConcreteMessageFactory;
 import message.Message;
 import message.MessageFactory;
@@ -11,6 +15,9 @@ import message.StringMessage;
 
 public class StringMessageTest {
 
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
+    
 	private Message msg0; 
 	private Message msg2; 
 	private Message msg3; 
@@ -65,10 +72,10 @@ public class StringMessageTest {
 		assertEquals(true, groupIDinRange);
 	}	
 	
-	@SuppressWarnings("unused")
-	@Test(expected = IllegalArgumentException.class) 
+	@Test 
 	public void testGenerateRandomMessageZero() {
-		StringMessage strMsgnew = (StringMessage) messageFactory.generateRandomMessage(0);
+		thrown.expect(IllegalArgumentException.class);
+		messageFactory.generateRandomMessage(0);
 	}	
 
 	@After

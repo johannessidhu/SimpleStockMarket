@@ -1,16 +1,24 @@
 package dataStructuresTests;
 
 import static org.junit.Assert.assertEquals;
+
 import java.util.concurrent.LinkedBlockingQueue;
+
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
+
 import message.Message;
 import message.StringMessage;
 import dataSructures.MessageStorage;
 
 public class MessageStorageTest {
 
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
+    
 	private MessageStorage msgStorage;
 	private Message msg0; 
 	private Message msg1; 
@@ -37,8 +45,8 @@ public class MessageStorageTest {
 	@Test
 	public void testSimpleRemove() throws InterruptedException {
 		long groupIDToBeRemoved = 2; 
-		LinkedBlockingQueue<Message> removedList= msgStorage.removeMessagesFromStorage(groupIDToBeRemoved);
-		StringMessage strMsg0 = (StringMessage)removedList.take();
+		LinkedBlockingQueue<Message> removedList = msgStorage.removeMessagesFromStorage(groupIDToBeRemoved);
+		StringMessage strMsg0 = (StringMessage) removedList.take();
 
 		assertEquals("msg2", strMsg0.getData());
 	}
@@ -68,15 +76,17 @@ public class MessageStorageTest {
 		assertEquals(null, removedList);
 	}
 
-	@Test(expected = IllegalArgumentException.class) 
+	@Test
 	public void testNullAddMessageToStorage() throws IllegalArgumentException {
+        thrown.expect(IllegalArgumentException.class);
 		msgStorage.addMessageToStorage(null);
 	}
 
-	@Test(expected = IllegalArgumentException.class) 
+	@Test
 	public void testNullMessageAddMessageToStorage() throws IllegalArgumentException {
 		StringMessage msgTemp = new StringMessage();
 		msgTemp = null;
+        thrown.expect(IllegalArgumentException.class);
 		msgStorage.addMessageToStorage(msgTemp);
 	}
 

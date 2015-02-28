@@ -30,7 +30,6 @@ public class ConcreteMessageFactoryTest {
 		}
 
 		if (msg.getGroupID() < 10) {
-			assertEquals(true, true);
 		} else {
 			fail();		
 		}
@@ -48,7 +47,6 @@ public class ConcreteMessageFactoryTest {
 		}
 
 		if (msg.getData().equalsIgnoreCase("CANCELLATION_MESSAGE")) {
-			assertEquals(true, true);
 		} else {
 			fail();		
 		}
@@ -66,7 +64,6 @@ public class ConcreteMessageFactoryTest {
 		}
 
 		if (msg.getData().equalsIgnoreCase("TERMINATION_MESSAGE")) {
-			assertEquals(true, true);
 		} else {
 			fail();		
 		}

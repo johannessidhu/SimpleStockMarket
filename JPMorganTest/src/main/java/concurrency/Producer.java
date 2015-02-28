@@ -28,8 +28,8 @@ public class Producer implements Runnable {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(Producer.class);	
 	// POISON added as the very last message in the process, when no more messages are going to be received from any group, to terminate all threads
-	private final static StringMessage POISON = new StringMessage(-1,"POISON"); 
-	private MessageFactory messageFactory = null; 
+	protected final static StringMessage POISON = new StringMessage(-1,"POISON"); 
+	protected MessageFactory messageFactory = null; 
 
 	protected BlockingQueue<Message> queue = null;
 	protected MessageStorage messageStorage = null;

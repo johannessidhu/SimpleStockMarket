@@ -1,16 +1,10 @@
 package utilitiesTests;
 
 import static org.junit.Assert.assertEquals;
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 import utilities.ConfigurationFileValidator;
 
 public class ConfigurationFileValidatorTest {
-
-	@Before
-	public void setUp() throws Exception {
-	}
 
 	@Test
 	public void testStringCheckerDash() {
@@ -98,10 +92,6 @@ public class ConfigurationFileValidatorTest {
 	@Test
 	public void testValidConfigurationFileLongEntryNull() {
 		assertEquals(false, ConfigurationFileValidator.isValidConfigurationFileLongEntry(null));
-	}
-	
-	@After
-	public void tearDown() {
 	}
 
 }
