@@ -22,12 +22,12 @@ public class StringMessage implements Message {
 
 	/**
 	 * Empty constructor
-	 * Sets the groupID to -1 -- I am making an assumption,
+	 * Sets the groupID to Integer.MIN_VALUE -- I am making an assumption,
 	 * Normally I would go back to the product owner and verify this uncertainty
 	 * As to my knowledge from the requirements document there is no mention of only positive numbers used for the groupID 
 	 * */
 	public StringMessage() {
-		groupID = -1;
+		groupID = Integer.MIN_VALUE;
 		data = "";
 	}
 
@@ -36,21 +36,7 @@ public class StringMessage implements Message {
 		this.data = stringMessage;
 	}
 
-	/**
-	 * when a Message has completed processing, it's completed() method will be called
-	 * To simulate the random nature of processing the message, I have included a TimeUnit.MILLISECONDS.sleep(rnd.nextInt(150)).
-	 * This simulates the following extract from the spec sheet: 
-	 * "to perform some, potentially very time consuming, operations on messages that you send to it."
-	 * 
-	 */
 	public void completed() {
-		Random rnd = new Random();
-		try {
-			TimeUnit.MILLISECONDS.sleep(rnd.nextInt(150));
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-
 		LOGGER.info("Completed processing " + toString());
 	}
 
@@ -74,14 +60,14 @@ public class StringMessage implements Message {
 
 		return clone;
 	}
-	
-    @Override
-    public int hashCode() {
-        return new HashCodeBuilder(433, 1499). 
-            append(groupID).
-            append(data).
-            toHashCode();
-    }
+
+	@Override
+	public int hashCode() {
+		return new HashCodeBuilder(433, 1499). 
+				append(groupID).
+				append(data).
+				toHashCode();
+	}
 
 	@Override
 	public boolean equals(Object obj) {
@@ -97,7 +83,7 @@ public class StringMessage implements Message {
 				(cprToStringMsg.getData().equalsIgnoreCase(this.getData()))) {
 			return true;
 		}
-		
+
 		return false;
 	}
 

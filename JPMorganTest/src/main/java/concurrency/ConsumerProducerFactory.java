@@ -18,19 +18,19 @@ public class ConsumerProducerFactory {
 		this.numberOFConsumers = numberOFConsumers;
 	}
 
-	public ExecutorService providesProducerExecutor() throws IllegalArgumentException{
+	public ExecutorService provideProducerExecutor() throws IllegalArgumentException{
 		return Executors.newFixedThreadPool(numberOFProducers);
 	}
 
-	public Runnable providesProducer(BlockingQueue<Message> queue, MessageStorage messageStorage, XMLConfiguration appConfig) {
+	public Runnable provideProducer(BlockingQueue<Message> queue, MessageStorage messageStorage, XMLConfiguration appConfig) {
 		return new Producer(queue, messageStorage, appConfig);
 	}
 
-	public ExecutorService providesConsumerExecutor() {
+	public ExecutorService provideConsumerExecutor() {
 		return Executors.newFixedThreadPool(numberOFConsumers);
 	}
 
-	public Runnable providesConsumer(BlockingQueue<Message> queue, MessageStorage messageStorage, GenericGateway genericGateway) {
+	public Runnable provideConsumer(BlockingQueue<Message> queue, MessageStorage messageStorage, GenericGateway genericGateway) {
 		return new Consumer(queue, messageStorage, genericGateway);
 	}
 

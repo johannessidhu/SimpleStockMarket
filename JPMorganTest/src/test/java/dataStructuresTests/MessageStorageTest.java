@@ -2,6 +2,7 @@ package dataStructuresTests;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
 import org.junit.After;
@@ -86,8 +87,26 @@ public class MessageStorageTest {
 	public void testNullMessageAddMessageToStorage() throws IllegalArgumentException {
 		StringMessage msgTemp = new StringMessage();
 		msgTemp = null;
-        thrown.expect(IllegalArgumentException.class);
+        
+		thrown.expect(IllegalArgumentException.class);
 		msgStorage.addMessageToStorage(msgTemp);
+	}
+
+	@Test
+	public void testClear() {
+		msgStorage.clear();
+
+		assertEquals(0, msgStorage.size());
+	}
+
+	@Test
+	public void testGetBlockingQueueReturnsBlockingQueueWithCorrectNumberOfMessages() {
+		assertEquals(1, msgStorage.getBlockingQueue(msg0.getGroupID()).size());
+	}
+	
+	@Test
+	public void testgetBlockingQueueReturnsBlockingQueueWithCorrectMessageObject() {
+		assertEquals(msg1, msgStorage.getBlockingQueue(msg1.getGroupID()).peek());
 	}
 
 	@After

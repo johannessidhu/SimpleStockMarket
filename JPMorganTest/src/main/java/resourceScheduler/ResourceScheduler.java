@@ -70,18 +70,18 @@ public class ResourceScheduler {
 		BlockingQueue<Message> queue = new LinkedBlockingQueue<Message>();
 		MessageStorage messageStorage = new MessageStorage();
 		ConsumerProducerFactory consumerProducerFactory = new ConsumerProducerFactory(numberOFProducers, numberOFConsumers); 
-		ExecutorService producerExecutor = consumerProducerFactory.providesProducerExecutor();
+		ExecutorService producerExecutor = consumerProducerFactory.provideProducerExecutor();
 
 		for (int i = 0; i < numberOFProducers; i++) {
-			Runnable producer = consumerProducerFactory.providesProducer(queue, messageStorage, appConfig);
+			Runnable producer = consumerProducerFactory.provideProducer(queue, messageStorage, appConfig);
 			producerExecutor.execute(producer);
 		}
 
 		producerExecutor.shutdown();
-		ExecutorService consumerExecutor = consumerProducerFactory.providesConsumerExecutor();
+		ExecutorService consumerExecutor = consumerProducerFactory.provideConsumerExecutor();
 
 		for (int i = 0; i < numberOFConsumers; i++) {
-			Runnable consumer = consumerProducerFactory.providesConsumer(queue, messageStorage, GENERIC_GATEWAY);
+			Runnable consumer = consumerProducerFactory.provideConsumer(queue, messageStorage, GENERIC_GATEWAY);
 			consumerExecutor.execute(consumer);
 		}
 
