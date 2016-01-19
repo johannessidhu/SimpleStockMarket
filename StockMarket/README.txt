@@ -8,7 +8,6 @@ Simple Stock Market
     Also comments usually go stale or are in danger to be (from my experience over the last year or so), so personally not a big fan of comments in code unless absolutely necessary :)
 6.  I decided not to write unit tests for the toString() methods. In my humble opinion there’s nothing to gain from them, a part of test code coverage. 
 7.  I tried to follow TDD as much as possible, but at some points I cheated and wrote the production code before writing unit tests.  I also sometimes skipped smaller intermediate steps and wrote tests that covered features rather than smaller units of work, but whenever I did I used Ctrl +1 as much as possible to let my tests write the corresponding missing production code. :) 
-8.  Finally, I had no code reviews just my own tired eyes going over the code, so please forgive any negligence (bugs) on my part, as much as possible. :)
 
 Thanks for taking the time to look at my code.
 
